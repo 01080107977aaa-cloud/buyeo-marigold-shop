@@ -2026,7 +2026,7 @@ window.closeHarvest=function(){
 (function(){
   window.shareOfficialOrder=function(){
     var url=window.location.origin + window.location.pathname;
-    var data={title:'대성농장 부여 메리골드 주문서',text:'대성농장 주문서입니다.',url:url};
+    var data={title:'대성농장 부여 메리골드 주문서',text:'대성농장 부여 메리골드 주문서입니다.',url:url};
     if(navigator.share){navigator.share(data).catch(function(){});}
     else if(navigator.clipboard){
       navigator.clipboard.writeText(url).then(function(){alert('대성농장 주문서 주소를 복사했습니다.');});
