@@ -2169,8 +2169,9 @@ window.closeHarvest=function(){
     const dep=(sameDep?.checked?buyer:(document.getElementById('dep')?.value||'').trim());
     const rec=(document.getElementById('rec')?.value||'').trim();
     const recPhone=(document.getElementById('recPhone')?.value||'').trim().replace(/[^0-9]/g,'');
-    const addr=(document.getElementById('addr')?.value||'').trim();
-    const detail=(document.getElementById('detail')?.value||'').trim();
+    const addr=String(document.getElementById('addr')?.value || document.getElementById('addr')?.getAttribute('data-address') || '').trim();
+    const detail=String(document.getElementById('detail')?.value||'').trim();
+    const postalCode=String(document.getElementById('postalCode')?.value||'').trim();
     const memo=(document.getElementById('memo')?.value||'').trim();
     const receiptSel=document.getElementById('receipt');
     const receipt=receiptSel?.value ? receiptSel.value : '미신청';
@@ -2187,7 +2188,7 @@ window.closeHarvest=function(){
       p_depositor_name:dep,
       p_receiver_name:rec,
       p_receiver_phone:recPhone,
-      p_postal_code:(document.getElementById('postalCode')?.value||''),
+      p_postal_code:postalCode,
       p_address:addr,
       p_detail_address:detail,
       p_delivery_memo:memo,
@@ -2587,8 +2588,11 @@ window.closeHarvest=function(){
         var zipField=document.getElementById('postalCode');
         var detailField=document.getElementById('detail');
 
-        if(addrField) addrField.value=addr;
-        if(zipField) zipField.value=data.zonecode || '';
+        if(addrField){
+          addrField.value=String(addr||'').trim();
+          addrField.setAttribute('data-address',String(addr||'').trim());
+        }
+        if(zipField) zipField.value=String(data.zonecode||'').trim();
         if(detailField){
           detailField.focus();
           try{ detailField.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){}
