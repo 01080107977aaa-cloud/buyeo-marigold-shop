@@ -2060,25 +2060,42 @@ window.closeHarvest=function(){
     }
     updatePriceAndTotals();
   }
-
-  function updatePriceAndTotals(){
+function updatePriceAndTotals(){
     const offer=selectedOffer();
-    if(!offer)return;
-    const stock=Math.max(0,Number(offer.stock||0));
-    state.qty=Math.max(1,Math.min(stock||1,Number(state.qty||1)));
-    const price=Number(offer.price||0);
+    const submitBtn=document.querySelector('#detailPage .summary .submit');
+    const stock=offer ? Math.max(0,Number(offer.stock)||0) : 0;
+    const soldOut=!offer || stock<=0;
+
+    if(submitBtn){
+      submitBtn.disabled=soldOut;
+      submitBtn.setAttribute('aria-disabled',soldOut?'true':'false');
+      submitBtn.textContent=soldOut?'품절':'주문하기';
+      submitBtn.style.opacity=soldOut?'.55':'1';
+      submitBtn.style.cursor=soldOut?'not-allowed':'pointer';
+    }
+
+    if(soldOut) state.qty=0;
+    else state.qty=Math.max(1,Math.min(stock,Number(state.qty)||1));
+
+    const price=offer ? Number(offer.price)||0 : 0;
     const region=document.querySelector('input[name="shippingRegion"]:checked')?.value||'normal';
     const ship=region==='jeju'?6000:region==='island'?8000:3000;
-    const sub=price*state.qty, total=sub+ship;
+    const sub=price*state.qty;
+    const total=sub+ship;
+
     const dprice=document.getElementById('dprice');
     const qty=document.getElementById('qty');
-    const subEl=document.getElementById('sub'),shipEl=document.getElementById('ship'),totalEl=document.getElementById('total');
+    const subEl=document.getElementById('sub');
+    const shipEl=document.getElementById('ship');
+    const totalEl=document.getElementById('total');
+
     if(dprice)dprice.textContent=money(price);
     if(qty)qty.textContent=state.qty;
     if(subEl)subEl.textContent=money(sub);
     if(shipEl)shipEl.textContent=money(ship);
     if(totalEl)totalEl.textContent=money(total);
   }
+
 
   function renderHome(){
     const box=document.querySelector('#homePage .products');
@@ -2161,7 +2178,33 @@ window.closeHarvest=function(){
   window.send=async function(){
     const p=state.current, offer=selectedOffer();
     if(!p||!offer)return alert('상품과 옵션을 선택해주세요.');
-    if(Number(offer.stock||0)<=0)return alert('선택하신 옵션은 품절입니다.');
+    if(Number(offer.stock||0)<=0){
+      updatePriceAndTotals();
+      return alert('선택하신 옵션은 품절입니다.');
+    }
+    // 주문 직전에 DB의 최신 재고를 다시 확인해 오래된 화면의 주문을 막습니다.
+    if(offer.id && !String(offer.id).startsWith('legacy-')){
+      const {data:latestOption,error:stockError}=await db
+        .from('product_options')
+        .select('stock,is_active')
+        .eq('id',offer.id)
+        .maybeSingle();
+      if(stockError){
+        console.error('재고 재확인 실패:',stockError);
+        return alert('재고를 확인하지 못했습니다. 화면을 새로고침한 뒤 다시 시도해주세요.');
+      }
+      if(!latestOption || latestOption.is_active===false || Number(latestOption.stock||0)<=0){
+        offer.stock=0;
+        updatePriceAndTotals();
+        return alert('선택하신 옵션은 품절입니다.');
+      }
+      offer.stock=Number(latestOption.stock||0);
+      if(state.qty>offer.stock){
+        state.qty=offer.stock;
+        updatePriceAndTotals();
+        return alert('남은 재고에 맞춰 수량을 조정했습니다. 주문 내용을 확인해주세요.');
+      }
+    }
     const nickname=(document.getElementById('nickname')?.value||'').trim();
     const buyer=(document.getElementById('buyer')?.value||'').trim();
     const phone=(document.getElementById('phone')?.value||'').trim().replace(/[^0-9]/g,'');
@@ -2196,12 +2239,12 @@ window.closeHarvest=function(){
       p_cash_receipt_number:receiptNo,
       p_items:[item]
     });
-    if(error){alert('주문 접수 중 오류가 발생했습니다.\\n'+error.message);return;}
+ if(error){alert('주문 접수 중 오류가 발생했습니다.\\n'+error.message);return;}
     const expected=Number(offer.price||0)*state.qty+3000;
     const serverTotal=Number(data?.total_amount||0);
     if(serverTotal && serverTotal!==expected){
       alert('주문은 접수됐지만 금액 계산이 현재 상품 옵션과 다릅니다.\\n서버 주문함수에 새 옵션 가격 반영 작업이 필요합니다.\\n주문번호: '+(data?.order_no||'')+'\\n서버금액: '+money(serverTotal)+'\\n선택금액: '+money(expected));
-      return;
+      return;   
     }
     alert('주문이 접수되었습니다.\\n주문번호: '+(data?.order_no||'')+'\\n최종 결제금액: '+money(serverTotal||expected)+'\\n\\n입금 후 대성농장에서 입금확인합니다.');
     const lp=document.getElementById('lp'), ld=document.getElementById('ld');
