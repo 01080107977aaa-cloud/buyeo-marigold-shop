@@ -1490,10 +1490,10 @@ body.popup-order .content{
 </div>
 </div></div></section>
 <section id="detailPage" class="hidden"><div class="panel"><button class="back" onclick="goHomePage()">←  뒤로가기  ·  상품목록</button><div class="detailphoto"><img id="dimg"></div><h1 id="dname"></h1><p id="ddesc" style="color:var(--muted)"></p><div class="card"><b id="dprice" style="color:var(--g)"></b><div class="qty"><button onclick="chg(-1)">−</button><strong id="qty">1</strong><button onclick="chg(1)">+</button></div></div>
-<h2>주문자 정보</h2><div class="card"><div class="field"><label>카페닉네임 *</label><input id="nickname"></div><div class="row"><div class="field"><label>이름 *</label><input id="buyer"></div><div class="field"><label>휴대폰번호 *</label><input id="phone"></div></div></div>
-<h2>입금자 정보</h2><div class="card"><label class="check"><input id="sameDep" type="checkbox" checked> 주문자와 동일</label><div id="depBox" class="hidden"><div class="field"><label>입금자명 *</label><input id="dep"></div></div></div>
-<h2>배송정보</h2><div class="card"><div class="row"><div class="field"><label>받으시는 분 *</label><input id="rec" placeholder="받으시는 분 이름"></div><div class="field"><label>받으시는 분 휴대폰 *</label><input id="recPhone" placeholder="010-0000-0000" inputmode="tel"></div></div><div class="field"><label>주소 *</label><div style="display:grid;grid-template-columns:1fr auto;gap:7px"><input id="addr" placeholder="주소를 검색해주세요" readonly onclick="window.openAddressSearch();return false;"><button id="addressSearchBtn" type="button" class="small" onclick="window.openAddressSearch();return false;" style="white-space:nowrap">주소 검색</button></div><input id="postalCode" type="hidden"></div><div class="field"><label>상세주소 *</label><input id="detail" placeholder="상세주소를 입력해주세요"></div><div class="field" id="shippingChoiceBox"><label>추가 배송비 선택</label><div style="display:flex;gap:8px;flex-wrap:wrap"><label style="display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #d9d6ce;border-radius:9px;background:#fff;cursor:pointer;font-size:13px"><input type="radio" name="shippingRegion" value="jeju" style="width:18px;min-height:18px"> 제주도 +3,000원</label><label style="display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #d9d6ce;border-radius:9px;background:#fff;cursor:pointer;font-size:13px"><input type="radio" name="shippingRegion" value="island" style="width:18px;min-height:18px"> 섬지역 +5,000원</label></div></div><div class="field"><label>배송메모</label><textarea id="memo"></textarea></div></div>
-<h2>현금영수증</h2><div class="card"><div class="field"><label>발급 여부</label><select id="receipt" onchange="receiptBox.classList.toggle('hidden',!this.value)"><option value="">신청 안 함</option><option>소득공제</option><option>지출증빙</option></select></div><div id="receiptBox" class="hidden"><input id="receiptNo" placeholder="발급번호"></div></div>
+<h2>주문자 정보</h2><div class="card"><div class="field"><label>카페닉네임 *</label><input id="nickname" autocomplete="off"></div><div class="row"><div class="field"><label>이름 *</label><input id="buyer" autocomplete="off"></div><div class="field"><label>휴대폰번호 *</label><input id="phone" autocomplete="off"></div></div></div>
+<h2>입금자 정보</h2><div class="card"><label class="check"><input id="sameDep" type="checkbox" checked> 주문자와 동일</label><div id="depBox" class="hidden"><div class="field"><label>입금자명 *</label><input id="dep" autocomplete="off"></div></div></div>
+<h2>배송정보</h2><div class="card"><div class="row"><div class="field"><label>받으시는 분 *</label><input id="rec" placeholder="받으시는 분 이름" autocomplete="off"></div><div class="field"><label>받으시는 분 휴대폰 *</label><input id="recPhone" placeholder="010-0000-0000" inputmode="tel" autocomplete="off"></div></div><div class="field"><label>주소 *</label><div style="display:grid;grid-template-columns:1fr auto;gap:7px"><input id="addr" placeholder="주소를 검색해주세요" readonly onclick="window.openAddressSearch();return false;" autocomplete="off"><button id="addressSearchBtn" type="button" class="small" onclick="window.openAddressSearch();return false;" style="white-space:nowrap">주소 검색</button></div><input id="postalCode" type="hidden"></div><div class="field"><label>상세주소 *</label><input id="detail" placeholder="상세주소를 입력해주세요" autocomplete="off"></div><div class="field" id="shippingChoiceBox"><label>추가 배송비 선택</label><div style="display:flex;gap:8px;flex-wrap:wrap"><label style="display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #d9d6ce;border-radius:9px;background:#fff;cursor:pointer;font-size:13px"><input type="radio" name="shippingRegion" value="jeju" style="width:18px;min-height:18px"> 제주도 +3,000원</label><label style="display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #d9d6ce;border-radius:9px;background:#fff;cursor:pointer;font-size:13px"><input type="radio" name="shippingRegion" value="island" style="width:18px;min-height:18px"> 섬지역 +5,000원</label></div></div><div class="field"><label>배송메모</label><textarea id="memo" autocomplete="off"></textarea></div></div>
+<h2>현금영수증</h2><div class="card"><div class="field"><label>발급 여부</label><select id="receipt" onchange="receiptBox.classList.toggle('hidden',!this.value)"><option value="">신청 안 함</option><option>소득공제</option><option>지출증빙</option></select></div><div id="receiptBox" class="hidden"><input id="receiptNo" placeholder="발급번호" autocomplete="off"></div></div>
 <div class="summary"><div class="sum"><span>상품금액</span><b id="sub">0원</b></div><div class="sum"><span>재구매 할인</span><b>주문 확인 후 적용</b></div><div class="sum"><span>배송비</span><b id="ship">0원</b></div><div class="sum total"><span>최종 결제금액</span><span id="total">0원</span></div><div class="bank"><b>입금계좌</b><div class="account">농협 302-8010-7977-01</div><div class="owner">예금주 대성농장</div></div><button class="submit" onclick="send()">주문하기</button></div></div></section>
 
 <section id="prepDetailPage" class="hidden">
@@ -1514,7 +1514,7 @@ body.popup-order .content{
   </div>
 </section>
 
-<section id="lookupPage" class="hidden"><div class="lookup"><button class="back" type="button" onclick="goHomePage()">← 뒤로가기 · 홈</button><h1>고객주문조회</h1><p style="color:var(--muted)">휴대폰번호와 입금자명으로 주문을 확인합니다.</p><div class="card"><div class="field"><label>휴대폰번호</label><input id="lp"></div><div class="field"><label>입금자명</label><input id="ld"></div><button class="submit" onclick="window.lookupOrders()">주문조회</button><a class="trackingBtn" href="https://www.lotteglogis.com/mobile/main" target="_blank" rel="noopener">📦 롯데택배 운송장 조회</a></div><div id="lookupResult"></div></div></section>
+<section id="lookupPage" class="hidden"><div class="lookup"><button class="back" type="button" onclick="goHomePage()">← 뒤로가기 · 홈</button><h1>고객주문조회</h1><p style="color:var(--muted)">휴대폰번호와 입금자명으로 주문을 확인합니다.</p><div class="card"><div class="field"><label>휴대폰번호</label><input id="lp" autocomplete="off"></div><div class="field"><label>입금자명</label><input id="ld" autocomplete="off"></div><button class="submit" onclick="window.lookupOrders()">주문조회</button><a class="trackingBtn" href="https://www.lotteglogis.com/mobile/main" target="_blank" rel="noopener">📦 롯데택배 운송장 조회</a></div><div id="lookupResult"></div></div></section>
 
 <section id="trackingPage" class="page hidden">
   <div class="pagehead">
@@ -2269,14 +2269,8 @@ function updatePriceAndTotals(){
       alert('주문은 접수됐지만 금액 계산이 현재 상품 옵션과 다릅니다.\\n서버 주문함수에 새 옵션 가격 반영 작업이 필요합니다.\\n주문번호: '+(data?.order_no||'')+'\\n서버금액: '+money(serverTotal)+'\\n선택금액: '+money(expected));
       return;   
     }
-    alert('주문이 접수되었습니다.\\n주문번호: '+(data?.order_no||'')+'\\n최종 결제금액: '+money(serverTotal||expected)+'\\n\\n입금 후 대성농장에서 입금확인합니다.');
-    const lp=document.getElementById('lp'), ld=document.getElementById('ld');
-    if(lp)lp.value=phone;
-    if(ld)ld.value=dep;
-    if(typeof goLookupPage==='function'){
-      goLookupPage();
-      if(typeof window.lookupOrders==='function')window.lookupOrders();
-    }
+    // 주문 접수 후 개인정보를 주문조회 입력란에 자동 복사하거나 조회하지 않습니다.
+    showOrderComplete(data?.order_no||'',serverTotal||expected);
   };
 
   /* 새 페이지에서 열었을 때도 관리자 등록 상품이 바로 보이게 합니다. */
@@ -2691,6 +2685,60 @@ function updatePriceAndTotals(){
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind,{once:true});
   else bind();
 })();
+</script>
+
+
+<style id="ds-order-complete-style">
+#dsOrderComplete{position:fixed;inset:0;z-index:99999;background:rgba(15,25,18,.58);display:none;align-items:center;justify-content:center;padding:18px}
+#dsOrderComplete .dsoc-card{width:min(100%,420px);background:#fff;border-radius:18px;padding:25px 22px 20px;box-shadow:0 18px 60px rgba(0,0,0,.24);color:#253329;font-family:inherit}
+#dsOrderComplete .dsoc-mark{width:48px;height:48px;border-radius:50%;background:#e8f3e9;color:#24543d;display:flex;align-items:center;justify-content:center;font-size:27px;margin:0 auto 12px}
+#dsOrderComplete h2{font-size:21px;text-align:center;margin:0 0 8px;color:#24543d}
+#dsOrderComplete .dsoc-desc{text-align:center;line-height:1.65;color:#606b63;font-size:14px;margin-bottom:17px}
+#dsOrderComplete .dsoc-info{background:#f7f8f5;border:1px solid #e5e9e2;border-radius:12px;padding:13px 14px;font-size:14px;line-height:1.8}
+#dsOrderComplete .dsoc-account{font-size:18px;font-weight:800;color:#24543d;letter-spacing:.2px}
+#dsOrderComplete .dsoc-total{display:flex;justify-content:space-between;border-top:1px solid #e1e5df;margin-top:8px;padding-top:8px;font-weight:800}
+#dsOrderComplete .dsoc-button{display:block;width:100%;border:0;border-radius:10px;background:#24543d;color:white;font-size:16px;font-weight:700;padding:13px;margin-top:17px;cursor:pointer}
+</style>
+<div id="dsOrderComplete" role="dialog" aria-modal="true" aria-labelledby="dsocTitle">
+  <div class="dsoc-card">
+    <div class="dsoc-mark">✓</div>
+    <h2 id="dsocTitle">주문이 접수되었습니다</h2>
+    <div class="dsoc-desc">입금하시면 대성농장에서 확인합니다.</div>
+    <div class="dsoc-info">
+      <div>주문번호: <b id="dsocOrderNo"></b></div>
+      <div>입금계좌</div>
+      <div class="dsoc-account">농협 302-8010-7977-01</div>
+      <div>예금주: 대성농장</div>
+      <div class="dsoc-total"><span>최종 결제금액</span><span id="dsocTotal"></span></div>
+    </div>
+    <button type="button" class="dsoc-button" onclick="window.closeOrderComplete()">확인</button>
+  </div>
+</div>
+<script id="ds-order-complete-script">
+window.showOrderComplete=function(orderNo,total){
+  const modal=document.getElementById('dsOrderComplete');
+  if(!modal)return alert('주문이 접수되었습니다.\\n주문번호: '+orderNo+'\\n최종 결제금액: '+Number(total||0).toLocaleString('ko-KR')+'원\\n\\n입금하시면 대성농장에서 확인합니다.\\n농협 302-8010-7977-01 (예금주 대성농장)');
+  document.getElementById('dsocOrderNo').textContent=orderNo||'-';
+  document.getElementById('dsocTotal').textContent=Number(total||0).toLocaleString('ko-KR')+'원';
+  modal.style.display='flex';
+};
+window.closeOrderComplete=function(){
+  const modal=document.getElementById('dsOrderComplete');
+  if(modal)modal.style.display='none';
+  // 접수된 주문은 DB에 보존하고, 화면에 남은 개인정보와 주문조회 결과만 초기화합니다.
+  ['nickname','buyer','phone','dep','rec','recPhone','addr','postalCode','detail','memo','receiptNo','lp','ld'].forEach(function(id){
+    const el=document.getElementById(id);
+    if(el) el.value='';
+  });
+  const sameDep=document.getElementById('sameDep'); if(sameDep) sameDep.checked=true;
+  const receipt=document.getElementById('receipt'); if(receipt) receipt.selectedIndex=0;
+  const receiptBox=document.getElementById('receiptBox'); if(receiptBox) receiptBox.classList.add('hidden');
+  const depBox=document.getElementById('depBox'); if(depBox) depBox.classList.add('hidden');
+  document.querySelectorAll('input[name="shippingRegion"]').forEach(function(el){el.checked=false;});
+  const result=document.getElementById('lookupResult'); if(result) result.innerHTML='';
+  if(typeof window.goHomePage==='function') window.goHomePage();
+};
+document.getElementById('dsOrderComplete')?.addEventListener('click',function(e){if(e.target===this)window.closeOrderComplete();});
 </script>
 
 </body></html>
